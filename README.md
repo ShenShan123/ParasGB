@@ -1215,6 +1215,7 @@ For SRAM graphs with tens of millions of nodes, the toolkit provides subgraph sa
 - `cg_class`: node-level ground capacitance classification
 - `cc_regr`: edge-level coupling capacitance regression
 - `cc_class`: edge-level coupling capacitance classification
+- `r_regr`: edge-level effective resistance regression
 - `r_class`: edge-level effective resistance classification
 
 #### Analog
@@ -1223,5 +1224,102 @@ For SRAM graphs with tens of millions of nodes, the toolkit provides subgraph sa
 - `cg_class`: node-level ground capacitance classification
 - `r_regr`: edge-level effective resistance regression
 - `r_class`: edge-level effective resistance classification
+
+### 8.4 Task Launch Commands
+
+#### SRAM
+
+Use `sram_rc/rcg/main.py` for the SRAM tasks. The default split trains on `ssram+digtime+timing_ctrl` and tests on `sandwich+ultra8t+array_128_32_8t`.
+
+```bash
+cd sram_rc/rcg
+
+# Cg node regression
+python main.py --data_type c --task_level node --task regression --model gcn --gpu 0
+
+# Cg node classification
+python main.py --data_type c --task_level node --task classification --num_classes 5 --model gcn --gpu 0
+
+# Cc edge regression
+python main.py --data_type c --task_level edge --task regression --model gcn --gpu 0
+
+# Cc edge classification
+python main.py --data_type c --task_level edge --task classification --num_classes 5 --model gcn --gpu 0
+
+# Reff edge regression
+python main.py --data_type r --task_level edge --task regression --model gcn --gpu 0
+
+# Reff edge classification
+python main.py --data_type r --task_level edge --task classification --num_classes 2 --model gcn --gpu 0
+```
+
+#### Analog
+
+Use `analog_rc/change/main.py` for the analog tasks. The default split trains on `1+2+3+6+8+9+10+11+12+15+16+17+18` and tests on `5+14+20`.
+
+```bash
+cd analog_rc/change
+
+# Cg node regression
+python main.py --task_level node --task regression --model sage --gpu 0
+
+# Cg node classification
+python main.py --task_level node --task classification --num_classes 5 --model sage --gpu 0
+
+# Reff edge regression
+python main.py --task_level edge --task regression --model sage --edge_sample_rate 0.6 --gpu 0
+
+# Reff edge classification
+python main.py --task_level edge --task classification --num_classes 5 --model sage --edge_sample_rate 0.6 --gpu 0
+```
+
+### 8.5 Minimal Usage Example
+
+```python
+from parasgb import RCDataset, Evaluator
+
+# 1. Load dataset with predefined train/test splits
+# dataset_name: 'sram' or 'analog'
+# task_level: 'node' or 'edge'
+# task_type: 'regression' or 'classification'
+dataset = RCDataset(
+    dataset_name='sram',
+    root='data/',
+    task_level='node',
+    task_type='regression'
+)
+
+# 2. Create DataLoader
+train_loader = dataset.get_dataloader(
+    split='train',
+    batch_size=32,
+    shuffle=True
+)
+
+# 3. Define model and optimizer
+model = MyModel()
+criterion = Loss()
+optimizer = Optimizer(model.parameters())
+
+# 4. Train
+for epoch in range(E):
+    for batch in train_loader:
+        y_pred = model(batch.node_attr, batch.edge_index)
+        loss = criterion(y_pred.squeeze(), batch.y[:, 0])
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+
+# 5. Create evaluator
+# Example: SRAM node-level ground capacitance regression
+evaluator = Evaluator(
+    dataset_name='sram',
+    task='cg_regr'
+)
+
+# 6. Evaluate
+metrics = evaluator.evaluate(y_pred, y_true)
+print(f"MAE = {metrics['mae']:.4f}")
+```
 
 ---
