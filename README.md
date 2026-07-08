@@ -37,6 +37,51 @@ The main subsets include:
 - `ultra8t`: an 8T SRAM optimized for subthreshold low-power operation
 - `array 128 32 8t`: one of the largest arrays in the dataset, used for extreme stress testing
 
+### 1.3 Dataset Download
+
+All raw graph data files are hosted on Hugging Face Datasets:
+
+```text
+https://huggingface.co/datasets/stomlvforever/ssram
+```
+
+After downloading, place the files under the following local paths:
+
+```text
+sram_rc/sram/
+sram_rc/sram_r/
+analog_rc/data/
+```
+
+#### SRAM Capacitance Dataset
+
+| Dataset Name | Description | Download Link |
+| --- | --- | --- |
+| SSRAM | SRAM capacitance dataset for Cg and Cc tasks | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/ssram.pt) |
+| DIGITAL_CLK_GEN | Digital timing capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/digtime.pt) |
+| TIMING_CTRL | Timing control capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/timing_ctrl.pt) |
+| ARRAY_128_32_8T | Large SRAM array capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/array_128_32_8t.pt) |
+| ULTRA8T | Ultra 8T SRAM capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/ultra8t.pt) |
+| SANDWICH_RAM | Sandwich SRAM capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/sandwich.pt) |
+| SP8192W | Specialized 8192 width capacitance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramc/sp8192w.pt) |
+
+#### SRAM Resistance Dataset
+
+| Dataset Name | Description | Download Link |
+| --- | --- | --- |
+| SSRAM_R | SRAM effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/ssram.pt) |
+| DIGITAL_CLK_GEN_R | Digital timing effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/digtime.pt) |
+| TIMING_CTRL_R | Timing control effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/timing_ctrl.pt) |
+| ARRAY_128_32_8T_R | Large SRAM array effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/array_128_32_8t.pt) |
+| ULTRA8T_R | Ultra 8T effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/ultra8t.pt) |
+| SANDWICH_RAM_R | Sandwich SRAM effective resistance dataset | [Download](https://huggingface.co/datasets/stomlvforever/ssram/resolve/main/sramr/sandwich.pt) |
+
+#### Analog RC Dataset
+
+| Dataset Name | Description | Download Link |
+| --- | --- | --- |
+| Analog RC | Analog Cg and Reff dataset with 20 circuit cases | [Download](https://huggingface.co/datasets/stomlvforever/ssram/tree/main/analog) |
+
 The node features of SRAM circuit graphs are defined as follows:
 
 ### Definition of SRAM Circuit Graph Node Features
@@ -108,7 +153,7 @@ The dataset lists the sources and functional summaries of 20 analog cases, inclu
 - `ID 19`: a bandgap reference circuit that uses size-dependent effects to cancel process-induced threshold-voltage variation, achieving ultra-low power consumption of 192 pW and highly stable performance (0.53% process variation) without post-fabrication trimming (Ji et al., 2019).
 - `ID 20`: a bandgap reference circuit that uses an ultra-low-power architecture to generate a stable reference voltage, with most of the 5 μA current dedicated to output, achieving a temperature coefficient below 10 ppm/°C from a 1 V supply without requiring a large-area operational amplifier (Edward, 2009).
 
-### 1.3 Dataset Labels
+### 1.4 Dataset Labels
 
 Label distribution plots:
 
