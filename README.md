@@ -1298,6 +1298,54 @@ python main.py --data_type r --task_level edge --task regression --model gcn --g
 python main.py --data_type r --task_level edge --task classification --num_classes 2 --model gcn --gpu 0
 ```
 
+CircuitGCL configuration:
+
+```bash
+cd sram_rc/CircuitGCL
+
+# Cg node regression
+python main.py --data_type c --task_level node --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+
+# Cg node classification
+python main.py --data_type c --task_level node --task classification --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+
+# Cc edge regression
+python main.py --data_type c --task_level edge --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+
+# Cc edge classification
+python main.py --data_type c --task_level edge --task classification --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+
+# Reff edge regression
+python main.py --data_type r --task_level edge --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+
+# Reff edge classification
+python main.py --data_type r --task_level edge --task classification --num_classes 2 --model clustergcn --num_gnn_layers 4 --num_head_layers 3 --hid_dim 96 --dropout 0.4 --lr 0.00005 --batch_size 128 --gpu 0
+```
+
+CirGPS configuration:
+
+```bash
+cd sram_rc/Cirgps
+
+# Cg node regression
+python main.py --data_type c --task_level node --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+
+# Cg node classification
+python main.py --data_type c --task_level node --task classification --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+
+# Cc edge regression
+python main.py --data_type c --task_level edge --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+
+# Cc edge classification
+python main.py --data_type c --task_level edge --task classification --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+
+# Reff edge regression
+python main.py --data_type r --task_level edge --task regression --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+
+# Reff edge classification
+python main.py --data_type r --task_level edge --task classification --num_classes 2 --class_boundaries 0.5 --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.3 --lr 0.0001 --batch_size 128 --gpu 0
+```
+
 #### Analog
 
 Use `analog_rc/change/main.py` for the analog tasks. The default split trains on `1+2+3+6+8+9+10+11+12+15+16+17+18` and tests on `5+14+20`.
@@ -1316,6 +1364,42 @@ python main.py --task_level edge --task regression --model sage --edge_sample_ra
 
 # Reff edge classification
 python main.py --task_level edge --task classification --num_classes 5 --model sage --edge_sample_rate 0.6 --gpu 0
+```
+
+CircuitGCL configuration:
+
+```bash
+cd analog_rc/CircuitGCL
+
+# Cg node regression
+python main.py --task_level node --task regression --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --model sage --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.4 --lr 0.0001 --epochs 200 --act_fn leakyrelu --gpu 0
+
+# Cg node classification
+python main.py --task_level node --task classification --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --num_classes 5 --model sage --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.4 --lr 0.0001 --epochs 200 --act_fn leakyrelu --gpu 0
+
+# Reff edge regression
+python main.py --task_level edge --task regression --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --model sage --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.4 --lr 0.0001 --epochs 200 --act_fn leakyrelu --gpu 0
+
+# Reff edge classification
+python main.py --task_level edge --task classification --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --num_classes 5 --model sage --num_gnn_layers 4 --num_head_layers 2 --hid_dim 144 --dropout 0.4 --lr 0.0001 --epochs 200 --act_fn leakyrelu --gpu 0
+```
+
+CirGPS configuration:
+
+```bash
+cd analog_rc/Cirgps
+
+# Cg node regression
+python main.py --task_level node --task regression --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 84 --dropout 0.4 --lr 0.0001 --num_hops 3 --act_fn leakyrelu --gpu 0
+
+# Cg node classification
+python main.py --task_level node --task classification --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 84 --dropout 0.4 --lr 0.0001 --num_hops 3 --act_fn leakyrelu --gpu 0
+
+# Reff edge regression
+python main.py --task_level edge --task regression --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 84 --dropout 0.4 --lr 0.0001 --num_hops 3 --act_fn leakyrelu --gpu 0
+
+# Reff edge classification
+python main.py --task_level edge --task classification --train_dataset "1+2+3+6+8+9+10+11+12+15+16+17+18" --test_dataset "5+14+20" --num_classes 5 --model clustergcn --num_gnn_layers 4 --num_head_layers 2 --hid_dim 84 --dropout 0.4 --lr 0.0001 --num_hops 3 --act_fn leakyrelu --gpu 0
 ```
 
 ---
